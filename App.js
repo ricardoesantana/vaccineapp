@@ -1,20 +1,26 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import HomeScreen from './screens/homeScreen';
+import CadastroScreen from './screens/cadastroScreen';
+import ListaScreen from './screens/listaScreen';
+import CadastroContatoScreen from './screens/cadastroContatoScreen';
+import AlterarContatoScreen from './screens/alterarContatoScreen';
 
-export default function App() {
+const Stack = createNativeStackNavigator();
+
+function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomeScreen} options={{headerShown:false, title: 'Tela de Login'}} />
+        <Stack.Screen name="Cadastro" component={CadastroScreen} options={{headerShown:false, title: 'Cadastro de Usuário'}} />
+        <Stack.Screen name="Lista" component={ListaScreen} options={{headerShown:false, title: 'Lista de Contatos'}} />
+        <Stack.Screen name="Contato" component={CadastroContatoScreen} options={{headerShown:false, title: 'Cadastro de Contatos'}} />
+        <Stack.Screen name="AlterarContato" component={AlterarContatoScreen} options={{headerShown:false, title: 'Alteração de Contatos'}} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
