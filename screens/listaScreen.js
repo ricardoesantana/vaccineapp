@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { Button, Header, ListItem, Avatar, Icon  } from 'react-native-elements';
-import { lista } from '../backend/dados.js';
+//import { lista } from '../backend/dados.js';
 import { useIsFocused } from "@react-navigation/native";
+import axios from 'axios';
 
 function ListaScreen({ navigation }) {
 
@@ -10,7 +11,14 @@ function ListaScreen({ navigation }) {
   const refresh = useIsFocused();
 
   useEffect(() => {
-    setList(lista);
+    async function resgatarDados(){
+      const result = await axios(
+          'http://professornilson.com/testeservico/clientes',
+        );
+        setList(result.data);
+    }
+    resgatarDados();
+
   }, [refresh])
 
   return (
@@ -38,11 +46,12 @@ function ListaScreen({ navigation }) {
             <ListItem key={i} bottomDivider onPress={()=> navigation.navigate('AlterarContato',
             {
                 nome: l.nome,
+                cpf: l.cpf,
                 telefone: l.telefone,
                 email: l.email,
                 id: l.id
             })}>
-              <Avatar source={{ uri: l.avatar_url }}  />
+              <Avatar source={{ uri: 'https://img.freepik.com/vetores-premium/perfil-de-avatar-de-homem-no-icone-redondo_24640-14044.jpg' }}  />
               <ListItem.Content>
                 <ListItem.Title>{l.nome}</ListItem.Title>
                 <ListItem.Subtitle>{l.telefone}</ListItem.Subtitle>
@@ -54,7 +63,7 @@ function ListaScreen({ navigation }) {
       );
 }
 
-      const styles2 = StyleSheet.create({
+    const styles2 = StyleSheet.create({
         container: {
         flex: 1,
       alignItems: 'center',

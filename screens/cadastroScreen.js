@@ -30,7 +30,10 @@ function CadastroScreen({ navigation }) {
   }
 
   return (
-    <View >
+    <View style={[styles2.container, {
+      flexDirection: "column"
+    }]}>
+      <View style={{ flex: 1 }} >
       <Header
           leftComponent={ <Button
             icon={
@@ -43,10 +46,15 @@ function CadastroScreen({ navigation }) {
             title=""
             onPress={()=>navigation.navigate('Home')}            
           /> }
-          centerComponent={{ text: 'Usuário', style: { color: '#fff', fontSize: 25 } }}
-      />
-      <View style={styles2.container}>    
-      
+          centerComponent={{
+            text: 'Usuário',
+            style: { color: '#fff', fontSize: 25, width: 300, textAlign: 'auto', flex: 1, alignItems: 'center', justifyContent: 'center' }
+          }}
+          centerContainerStyle={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+        />
+      </View>
+      {/* <View style={styles2.container}> */}
+      <View style={{ flex: 4 }} >
       <TextInput
         style={styles2.input}
         placeholder="Nome"
@@ -56,7 +64,7 @@ function CadastroScreen({ navigation }) {
       <TextInput
         style={styles2.input}
         placeholder="CPF"
-        keyboardType='numeric'
+        keyboardType="numeric"
         maxLength={11}
         value={cpf}
         onChangeText={setCpf}
@@ -89,7 +97,7 @@ const styles2 = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#fff',
-    paddingTop: 40
+    paddingTop: 0
   },
   title: {
     fontSize: 24,
@@ -98,7 +106,7 @@ const styles2 = StyleSheet.create({
     paddingTop: 40
   },
   input: {
-    width: '80%',
+    width: 300,
     height: 40,
     borderWidth: 1,
     borderColor: '#ccc',
@@ -111,8 +119,10 @@ const styles2 = StyleSheet.create({
     padding: 10,
     margin: 10,
     borderRadius: 14,
-    width: '80%',
+    width: 120,
     alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center'
   },
   buttonText: {
     color: '#fff',
