@@ -1,30 +1,63 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { Button, Header, Icon } from 'react-native-elements';
-import { usuarios, adicionarUsuario, removerUsuario } from '../backend/dados.js';
+// import { usuarios, adicionarUsuario, removerUsuario } from '../backend/dados.js';
+import { firebaseConfig } from '../backend/autentica.js';
+
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 
 function CadastroScreen({ navigation }) {
-  const [nome, setNome] = useState('');
-  const [cpf, setCpf] = useState('');
+
+  // const [nome, setNome] = useState('');
+  // const [cpf, setCpf] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
 
   function cadastrar() {
     // Aqui você pode implementar a lógica para cadastrar o usuário
-    if((nome, cpf, email, senha) !== ''){
-      const usuario = { id: null, nome: nome, cpf: cpf, email: email, senha: senha };
-      adicionarUsuario(usuario);
-      limparCampos();
-      alert("Usuário Cadastro com sucesso!")
-      navigation.navigate('Home');
-    }else{
+    // if ((nome, cpf, email, senha) !== '') {
+    //   const usuario = { id: null, nome: nome, cpf: cpf, email: email, senha: senha };
+    //   adicionarUsuario(usuario);
+    //   limparCampos();
+    //   alert("Usuário Cadastro com sucesso!")
+    //   navigation.navigate('Home');
+    // } else {
+    //   alert("Favor digitar todos os campos!")
+    // }
+
+    if ((email, senha) !== '') {
+      const auth = getAuth();
+      createUserWithEmailAndPassword(auth, email, senha)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          limparCampos();
+          alert("Usuário Cadastro com sucesso! ")
+          navigation.navigate('Home');
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          alert("Faha na criação do Usuário: " + errorCode + errorMessage);
+        });
+    } else {
       alert("Favor digitar todos os campos!")
     }
   }
 
   function limparCampos() {
-    setNome('');
-    setCpf('');
+    // setNome('');
+    // setCpf('');
     setEmail('');
     setSenha('');
   }
@@ -34,8 +67,8 @@ function CadastroScreen({ navigation }) {
       flexDirection: "column"
     }]}>
       <View style={{ flex: 1 }} >
-      <Header
-          leftComponent={ <Button
+        <Header
+          leftComponent={<Button
             icon={
               <Icon
                 name="arrow-left"
@@ -44,8 +77,8 @@ function CadastroScreen({ navigation }) {
               />
             }
             title=""
-            onPress={()=>navigation.navigate('Home')}            
-          /> }
+            onPress={() => navigation.navigate('Home')}
+          />}
           centerComponent={{
             text: 'Usuário',
             style: { color: '#fff', fontSize: 25, width: 300, textAlign: 'auto', flex: 1, alignItems: 'center', justifyContent: 'center' }
@@ -54,8 +87,8 @@ function CadastroScreen({ navigation }) {
         />
       </View>
       {/* <View style={styles2.container}> */}
-      <View style={{ flex: 4 }} >
-      <TextInput
+      <View style={{ flex: 2 }} >
+        {/* <TextInput
         style={styles2.input}
         placeholder="Nome"
         value={nome}
@@ -68,24 +101,24 @@ function CadastroScreen({ navigation }) {
         maxLength={11}
         value={cpf}
         onChangeText={setCpf}
-      />
-      <TextInput
-        style={styles2.input}
-        placeholder="Email"
-        keyboardType="email-address"
-        value={email}
-        onChangeText={setEmail}
-      />
-      <TextInput
-        style={styles2.input}
-        placeholder="Senha"
-        secureTextEntry
-        value={senha}
-        onChangeText={setSenha}
-      />
-      <TouchableOpacity style={styles2.button} onPress={cadastrar}>
-        <Text style={styles2.buttonText}>Salvar</Text>
-      </TouchableOpacity>
+      /> */}
+        <TextInput
+          style={styles2.input}
+          placeholder="Email"
+          keyboardType="email-address"
+          value={email}
+          onChangeText={setEmail}
+        />
+        <TextInput
+          style={styles2.input}
+          placeholder="Senha"
+          secureTextEntry
+          value={senha}
+          onChangeText={setSenha}
+        />
+        <TouchableOpacity style={styles2.button} onPress={cadastrar}>
+          <Text style={styles2.buttonText}>Salvar</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

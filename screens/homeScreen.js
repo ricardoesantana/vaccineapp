@@ -1,7 +1,20 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { Button, Avatar } from 'react-native-elements';
-import { consultarUsuario } from '../backend/dados.js';
+// import { consultarUsuario } from '../backend/dados.js';
+import { firebaseConfig } from '../backend/autentica.js';
+
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 
 function HomeScreen({ navigation }) {
 
@@ -12,12 +25,24 @@ function HomeScreen({ navigation }) {
     // Aqui você pode implementar a lógica para cadastrar o usuário
     // console.log(`Email: ${email}, Senha: ${password}`);
     if((email, password) !== ''){
-      if(consultarUsuario(email, password)){
-        return navigation.navigate('Lista');
-      }else{
-        alert("Login ou Senha inválidos!")
-      }
-      
+      // if(consultarUsuario(email, password)){
+      //   return navigation.navigate('Lista');
+      // }else{
+      //   alert("Login ou Senha inválidos!")
+      // }
+      const auth = getAuth();
+      signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // login bem sucedido
+        const user = userCredential.user;
+        alert("Usuário logado: "+ user.email);
+        navigation.navigate('Lista');
+      })
+      .catch((error) => {
+        // erro ao fazer login
+        alert("Login ou Senha inválidos!");
+      });
+
     }else{
       alert('Favor inserir Login e Senha!')
     }
@@ -26,7 +51,7 @@ function HomeScreen({ navigation }) {
 
   function cadastrar() {
     // Aqui você pode implementar a lógica para cadastrar o usuário
-    console.log(`opa!!!`);
+    // console.log(`opa!!!`);
     ()=>navigation.navigate('Cadastro');
   }
 

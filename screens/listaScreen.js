@@ -51,7 +51,7 @@ function ListaScreen({ navigation }) {
                 email: l.email,
                 id: l.id
             })}>
-              <Avatar source={{ uri: 'https://img.freepik.com/vetores-premium/perfil-de-avatar-de-homem-no-icone-redondo_24640-14044.jpg' }}  />
+              <Avatar source={{ uri: 'https://i.pravatar.cc/150' }}  />
               <ListItem.Content>
                 <ListItem.Title>{l.nome}</ListItem.Title>
                 <ListItem.Subtitle>{l.telefone}</ListItem.Subtitle>
