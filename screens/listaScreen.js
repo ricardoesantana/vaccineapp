@@ -13,7 +13,8 @@ function ListaScreen({ navigation }) {
   useEffect(() => {
     async function resgatarDados(){
       const result = await axios(
-          'http://professornilson.com/testeservico/clientes',
+          //'http://professornilson.com/testeservico/clientes',
+          'https://644c548917e2663b9d049ecb.mockapi.io/cliente/',
         );
         setList(result.data);
     }

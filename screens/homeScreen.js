@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import { Button, Avatar } from 'react-native-elements';
+import { Button, Avatar, Input  } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 // import { consultarUsuario } from '../backend/dados.js';
 import { firebaseConfig } from '../backend/autentica.js';
 
@@ -20,16 +22,20 @@ function HomeScreen({ navigation }) {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorEmail, setErrorEmail] = useState('');
+  const [errorPassword, setErrorPassword] = useState('');
 
   function logar() {
     // Aqui você pode implementar a lógica para cadastrar o usuário
     // console.log(`Email: ${email}, Senha: ${password}`);
-    if((email, password) !== ''){
+    if(email !== '' && password !== '' && email !== null && password !== null){
       // if(consultarUsuario(email, password)){
       //   return navigation.navigate('Lista');
       // }else{
       //   alert("Login ou Senha inválidos!")
       // }
+      setErrorEmail('');
+      setErrorPassword('');
       const auth = getAuth();
       signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -44,7 +50,14 @@ function HomeScreen({ navigation }) {
       });
 
     }else{
-      alert('Favor inserir Login e Senha!')
+      // alert('Favor inserir Login e Senha!');
+      if(email == ''){
+        setErrorEmail('Preencha seu e-mail corretamente');
+      }
+      if(password == ''){
+        setErrorPassword('Preecha sua senha corretamente');
+      }
+
     }
     
   }
@@ -66,21 +79,39 @@ function HomeScreen({ navigation }) {
         
         <Text style={styles.title}>Vacinação Digital</Text>
 
-      <TextInput
+      <Input
         style={styles.input}
         placeholder="Login"
         placeholderTextColor="#aaaaaa"
-        onChangeText={(text) => setEmail(text)}
+        errorStyle={{ color: 'red' }}
+        errorMessage={errorEmail}
+        leftIcon={
+          <Icon
+            name='envelope'
+            size={24}
+            color='black'
+          />
+        }
+        onChangeText={(text) => {
+          setEmail(text);
+          setErrorEmail(null);
+        }}
         value={email}
         underlineColorAndroid="transparent"
         autoCapitalize="none"
       />
-      <TextInput
+      <Input
         style={styles.input}
         placeholder="Senha"
         placeholderTextColor="#aaaaaa"
+        leftIcon={{ type: 'font-awesome', name: 'lock' }}
+        errorStyle={{ color: 'red' }}
+        errorMessage={errorPassword}
         secureTextEntry={true}
-        onChangeText={(text) => setPassword(text)}
+        onChangeText={(text) => {
+          setPassword(text);
+          setErrorPassword(null);
+        }}
         value={password}
         underlineColorAndroid="transparent"
         autoCapitalize="none"

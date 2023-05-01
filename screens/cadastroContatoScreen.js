@@ -29,7 +29,7 @@ function CadastroContatoScreen({ navigation }) {
   async function inserirDados() {
     if ((getNome, getEmail, getTelefone, getCpf) !== '') {
 
-      await axios.post('http://professornilson.com/testeservico/clientes', {
+      await axios.post('https://644c548917e2663b9d049ecb.mockapi.io/cliente/', {
         nome: getNome,
         cpf: getCpf,
         telefone: getTelefone,

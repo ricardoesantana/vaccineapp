@@ -41,7 +41,7 @@ function AlterarContatoScreen({ route, navigation }) {
   }
 
   function excluirDados() {
-    axios.delete('http://professornilson.com/testeservico/clientes/' + getId
+    axios.delete('https://644c548917e2663b9d049ecb.mockapi.io/cliente/' + getId
     )
       .then(function (response) {
         limparCampos();
@@ -71,7 +71,7 @@ function AlterarContatoScreen({ route, navigation }) {
   }
 
   async function alterarDados() {
-    await axios.put('http://professornilson.com/testeservico/clientes/' + getId, {
+    await axios.put('https://644c548917e2663b9d049ecb.mockapi.io/cliente/' + getId, {
       nome: getNome,
       cpf: getCpf,
       email: getEmail,
