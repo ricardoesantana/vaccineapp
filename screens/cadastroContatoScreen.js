@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import { Button, Header, Icon } from 'react-native-elements';
+import { Button, Header, Input  } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { showMessage } from "react-native-flash-message";
+
 // import { adicionarContato } from '../backend/dados.js';
 import axios from 'axios';
 
@@ -10,8 +13,13 @@ function CadastroContatoScreen({ navigation }) {
   const [getEmail, setEmail] = useState('');
   const [getTelefone, setTelefone] = useState('');
 
+  const [errorNome, setErrorNome] = useState('');
+  const [errorCpf, setErrorCpf] = useState('');
+  const [errorEmail, setErrorEmail] = useState('');
+  const [errorTelefone, setErrorTelefone] = useState('');
+
   function cadastrar() {
-    if ((nome, email, telefone) !== '') {
+    if ((nome !== '' && email !== '' && telefone !== '') ) {
       const contato = {
         nome: nome,
         avatar_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4HdzG1pEhoNcrazR62fZv_2gNXtiqlAq42A&usqp=CAU',
@@ -22,12 +30,29 @@ function CadastroContatoScreen({ navigation }) {
       alert("Contato Cadastro com sucesso!")
       navigation.navigate('Lista');
     } else {
-      alert("Favor inserir todos os campos!")
+      // alert("Favor inserir todos os campos!");
+      if(getNome == ''){
+        setErrorNome('Preencha seu Nome');
+      }
+      if(getCpf == ''){
+        setErrorCpf('Preencha seu CPF');
+      }
+      if(getEmail == ''){
+        setErrorEmail('Preencha seu E-mail');
+      }
+      if(getTelefone == ''){
+        setErrorTelefone('Preencha seu Telefone');
+      }
     }
   }
 
-  async function inserirDados() {
-    if ((getNome, getEmail, getTelefone, getCpf) !== '') {
+  async function cadastrarContato() {
+    if ((getNome !== '' && getEmail !== '' && getTelefone !== '' && getCpf !== '') ) {
+
+      setErrorNome('');
+      setErrorCpf('');
+      setErrorEmail('');
+      setErrorTelefone('');
 
       await axios.post('https://644c548917e2663b9d049ecb.mockapi.io/cliente/', {
         nome: getNome,
@@ -37,7 +62,12 @@ function CadastroContatoScreen({ navigation }) {
       }
       )
         .then(function (response) {
-          alert("Contato Cadastro com sucesso!")
+          alert("Contato Cadastro com sucesso!");
+          // showMessage({
+          //   message: "Contato Cadastro com sucesso!", 
+          //   type: "success", // success, error, info, warning
+          //   duration: 5000, // tempo em milissegundos
+          // });
           navigation.navigate('Lista');
           console.log(response);
         })
@@ -49,7 +79,19 @@ function CadastroContatoScreen({ navigation }) {
           console.log(error);
         });
     } else {
-      alert("Favor inserir todos os campos!")
+      // alert("Favor inserir todos os campos!");
+      if(getNome == ''){
+        setErrorNome('Preencha seu Nome');
+      }
+      if(getCpf == ''){
+        setErrorCpf('Preencha seu CPF');
+      }
+      if(getEmail == ''){
+        setErrorEmail('Preencha seu E-mail');
+      }
+      if(getTelefone == ''){
+        setErrorTelefone('Preencha seu Telefone');
+      }
     }
   }
 
@@ -86,32 +128,52 @@ function CadastroContatoScreen({ navigation }) {
       </View>
       {/* <View style={styles2.container}> */}
       <View style={{ flex: 4 }} >
-        <TextInput
+        <Input
           style={styles2.input}
           placeholder="Nome"
           value={getNome}
-          onChangeText={setNome}
+          onChangeText={(text) => {
+            setNome(text);
+            setErrorNome(null);
+          }}
+          errorStyle={{ color: 'red' }}
+          errorMessage={errorNome}
         />
-        <TextInput
+        <Input
           style={styles2.input}
           placeholder="CPF"
           value={getCpf}
-          onChangeText={setCpf}
+          onChangeText={(text) => {
+            setCpf(text);
+            setErrorCpf(null);
+          }}
+          errorStyle={{ color: 'red' }}
+          errorMessage={errorCpf}
         />
-        <TextInput
+        <Input
           style={styles2.input}
           placeholder="Email"
           keyboardType="email-address"
           value={getEmail}
-          onChangeText={setEmail}
+          onChangeText={(text) => {
+            setEmail(text);
+            setErrorEmail(null);
+          }}
+          errorStyle={{ color: 'red' }}
+          errorMessage={errorEmail}
         />
-        <TextInput
+        <Input
           style={styles2.input}
           placeholder="Telefone"
           value={getTelefone}
-          onChangeText={setTelefone}
+          onChangeText={(text) => {
+            setTelefone(text);
+            setErrorTelefone(null);
+          }}
+          errorStyle={{ color: 'red' }}
+          errorMessage={errorTelefone}
         />
-        <TouchableOpacity style={styles2.button} onPress={inserirDados}>
+        <TouchableOpacity style={styles2.button} onPress={cadastrarContato}>
           <Text style={styles2.buttonText}>Salvar</Text>
         </TouchableOpacity>
       </View>

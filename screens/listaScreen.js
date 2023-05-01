@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import { Button, Header, ListItem, Avatar, Icon  } from 'react-native-elements';
+import { Button, Header, ListItem, Avatar } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome';
 //import { lista } from '../backend/dados.js';
 import { useIsFocused } from "@react-navigation/native";
 import axios from 'axios';
@@ -37,7 +38,14 @@ function ListaScreen({ navigation }) {
           onPress={()=>navigation.navigate('Home')}            
         /> }
         rightComponent={<Button
-          title="+"
+          icon={
+            <Icon
+              name="user-plus"
+              size={25}
+              color="white"
+            />
+          }
+          title=""
           onPress={() => navigation.navigate('Contato')}
         />}
         centerComponent={{ text: 'Lista de Contatos', style: { color: '#fff', fontSize: 25 } }}

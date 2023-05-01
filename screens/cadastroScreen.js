@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import { Button, Header, Icon } from 'react-native-elements';
+import { Button, Header, Input } from 'react-native-elements';
 // import { usuarios, adicionarUsuario, removerUsuario } from '../backend/dados.js';
 import { firebaseConfig } from '../backend/autentica.js';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
@@ -22,6 +23,10 @@ function CadastroScreen({ navigation }) {
   // const [cpf, setCpf] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  const [errorEmail, setErrorEmail] = useState('');
+  const [errorSenha, setErrorSenha] = useState('');
+  const [valideEmail, setValideEmail] = useState(true);
+
 
   function cadastrar() {
     // Aqui você pode implementar a lógica para cadastrar o usuário
@@ -35,7 +40,9 @@ function CadastroScreen({ navigation }) {
     //   alert("Favor digitar todos os campos!")
     // }
 
-    if ((email, senha) !== '') {
+    if(email !== '' && senha !== '' && email !== null && senha !== null && valideEmail){
+      setErrorEmail('');
+      setErrorSenha('');
       const auth = getAuth();
       createUserWithEmailAndPassword(auth, email, senha)
         .then((userCredential) => {
@@ -51,8 +58,23 @@ function CadastroScreen({ navigation }) {
           alert("Faha na criação do Usuário: " + errorCode + errorMessage);
         });
     } else {
-      alert("Favor digitar todos os campos!")
+      // alert("Favor digitar todos os campos!");
+      if(email === '' || email === null){
+        setErrorEmail('Preencha seu e-mail corretamente');
+      }
+      if(senha === '' || senha === null){
+        setErrorSenha('Preecha sua senha corretamente');
+      }
+
     }
+  }
+
+  const validarEmail = (email) => {
+    // Expressão regular para validar e-mails
+    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    
+    // Verifica se o e-mail é válido
+    setValideEmail(emailRegex.test(email));
   }
 
   function limparCampos() {
@@ -102,19 +124,40 @@ function CadastroScreen({ navigation }) {
         value={cpf}
         onChangeText={setCpf}
       /> */}
-        <TextInput
+        <Input
           style={styles2.input}
           placeholder="Email"
+          errorStyle={{ color: 'red' }}
+          errorMessage={errorEmail}
           keyboardType="email-address"
           value={email}
-          onChangeText={setEmail}
+          leftIcon={
+            <Icon
+              name='envelope'
+              size={24}
+              color='black'
+            />
+          }
+          onChangeText={(text) => {
+            setEmail(text);
+            setErrorEmail(null);
+            // setValideEmail(false);
+          }}
+          onBlur={() => validarEmail(email)}
         />
-        <TextInput
+        {!valideEmail && <Text style={{ color: 'red' }}>Endereço de e-mail inválido</Text>}
+        <Input
           style={styles2.input}
           placeholder="Senha"
+          leftIcon={{ type: 'font-awesome', name: 'lock' }}
+          errorStyle={{ color: 'red' }}
+          errorMessage={errorSenha}
           secureTextEntry
           value={senha}
-          onChangeText={setSenha}
+          onChangeText={(text) => {
+            setSenha(text);
+            setErrorSenha(null);
+          }}
         />
         <TouchableOpacity style={styles2.button} onPress={cadastrar}>
           <Text style={styles2.buttonText}>Salvar</Text>

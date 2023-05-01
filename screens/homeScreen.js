@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import { Button, Avatar, Input  } from 'react-native-elements';
+import { Button, Avatar, Input, Overlay } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 // import { consultarUsuario } from '../backend/dados.js';
