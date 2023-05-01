@@ -18,6 +18,8 @@ function CadastroContatoScreen({ navigation }) {
   const [errorEmail, setErrorEmail] = useState('');
   const [errorTelefone, setErrorTelefone] = useState('');
 
+  const [valideEmail, setValideEmail] = useState(true);
+
   function cadastrar() {
     if ((nome !== '' && email !== '' && telefone !== '') ) {
       const contato = {
@@ -44,6 +46,14 @@ function CadastroContatoScreen({ navigation }) {
         setErrorTelefone('Preencha seu Telefone');
       }
     }
+  }
+
+  const validarEmail = (email) => {
+    // Expressão regular para validar e-mails
+    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    
+    // Verifica se o e-mail é válido
+    setValideEmail(emailRegex.test(email));
   }
 
   async function cadastrarContato() {
@@ -161,7 +171,9 @@ function CadastroContatoScreen({ navigation }) {
           }}
           errorStyle={{ color: 'red' }}
           errorMessage={errorEmail}
+          onBlur={() => validarEmail(getEmail)}
         />
+         {!valideEmail && <Text style={{ color: 'red' }}>Endereço de e-mail inválido</Text>}
         <Input
           style={styles2.input}
           placeholder="Telefone"
