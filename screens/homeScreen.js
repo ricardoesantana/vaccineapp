@@ -24,6 +24,7 @@ function HomeScreen({ navigation }) {
   const [password, setPassword] = useState('');
   const [errorEmail, setErrorEmail] = useState('');
   const [errorPassword, setErrorPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   function logar() {
     // Aqui você pode implementar a lógica para cadastrar o usuário
@@ -68,6 +69,34 @@ function HomeScreen({ navigation }) {
     ()=>navigation.navigate('Cadastro');
   }
 
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleForgotPassword = () => {
+    // Lógica para lidar com o esquecimento da senha
+    console.log('Esqueceu a senha?');
+  };
+
+  const handleGoogleSignIn = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      console.log('Usuário logado com sucesso:', userInfo);
+      // Lógica para lidar com o login com o Google
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        console.log('Login com o Google cancelado');
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        console.log('Login com o Google em andamento');
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        console.log('Serviços do Google Play indisponíveis ou desatualizados');
+      } else {
+        console.log('Erro ao fazer login com o Google:', error.message);
+      }
+    }
+  };
+
   return (
 
     <View style={styles.container}>
@@ -77,11 +106,11 @@ function HomeScreen({ navigation }) {
           uri: "https://ifmr-sa.org/wp-content/uploads/2022/10/Ze-gotinha.png"
         }} style={styles.avatar} />
         
-        <Text style={styles.title}>Vacinação Digital</Text>
+        <Text style={styles.title}> VACCINE APP </Text>
 
       <Input
         style={styles.input}
-        placeholder="Login"
+        placeholder="Email"
         placeholderTextColor="#aaaaaa"
         errorStyle={{ color: 'red' }}
         errorMessage={errorEmail}
@@ -107,7 +136,7 @@ function HomeScreen({ navigation }) {
         leftIcon={{ type: 'font-awesome', name: 'lock' }}
         errorStyle={{ color: 'red' }}
         errorMessage={errorPassword}
-        secureTextEntry={true}
+        secureTextEntry={!showPassword}
         onChangeText={(text) => {
           setPassword(text);
           setErrorPassword(null);
@@ -115,12 +144,30 @@ function HomeScreen({ navigation }) {
         value={password}
         underlineColorAndroid="transparent"
         autoCapitalize="none"
+        rightIcon={
+          <Icon
+            name={showPassword ? 'eye-off' : 'eye'}
+            type="feather"
+            onPress={toggleShowPassword}
+          />
+        }
       />
+      <TouchableOpacity 
+        onPress={handleForgotPassword} 
+        style={styles.forgotPasswordContainer}>
+        <Text style={styles.forgotPasswordText}>
+          Esqueceu a senha?
+        </Text>
+      </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={logar}>
-        <Text style={styles.buttonText}>Login</Text>
+        <Text style={styles.buttonText}>Entrar </Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('Cadastro')}>
-        <Text style={styles.buttonText} >Cadastrar-se</Text>
+        <Text style={styles.buttonText} >Criar Conta</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={handleGoogleSignIn} style={styles.googleButton}>
+        <Icon name="google" size={20} color="red" style={styles.googleIcon} title='Teste' />
+        <Text style={styles.googleButtonText}>Entrar com Google</Text>
       </TouchableOpacity>
     </View>
   );
@@ -131,12 +178,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#ffffff',
+    backgroundColor: '#497e99',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 24,
+    color: 'white',
   },
   input: {
     width: '80%',
@@ -167,6 +215,35 @@ const styles = StyleSheet.create({
     borderWidth: 4,
     borderColor: '#1c313a',
     marginBottom: 20,
+  },
+  forgotPasswordContainer: {
+    alignSelf: 'flex-end',
+    //marginTop: 10,
+    paddingRight: 40,
+    //padding: 20,
+  },
+  forgotPasswordText: {
+    color: '#1c313a',
+    fontSize: 16,
+    textDecorationLine: 'underline',
+    fontWeight: 'bold',
+  },
+  googleButton: {
+    backgroundColor: '#FFFFFF',
+    padding: 10,
+    margin: 10,
+    borderRadius: 14,
+    width: '80%',
+    alignItems: 'center',
+  },
+  googleButtonText: {
+    color: 'black',
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  googleIcon: {
+    marginRight: 10,
   },
 });
 

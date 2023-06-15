@@ -96,16 +96,19 @@ function CadastroScreen({ navigation }) {
                 name="arrow-left"
                 size={25}
                 color="white"
+                backgroundColor='#497e99'
               />
             }
             title=""
             onPress={() => navigation.navigate('Home')}
           />}
+          leftContainerStyle={{ backgroundColor: '#497e99' }}
           centerComponent={{
             text: 'Usuário',
             style: { color: '#fff', fontSize: 25, width: 300, textAlign: 'auto', flex: 1, alignItems: 'center', justifyContent: 'center' }
           }}
           centerContainerStyle={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+          containerStyle={{ backgroundColor: '#497e99' }}
         />
       </View>
       {/* <View style={styles2.container}> */}
@@ -172,7 +175,7 @@ const styles2 = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: '#497e99',
     paddingTop: 0
   },
   title: {
