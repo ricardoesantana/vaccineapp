@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { Button, Avatar, Input, Overlay } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -9,10 +9,15 @@ import { firebaseConfig } from '../backend/autentica.js';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "firebase/auth";
+// import { useEffect } from 'react';
+// import { useContext } from 'react';
+// import { AuthContext } from '../contexts/AuthContext.js';
+// import { auth } from '../service/firebase.js';
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -25,6 +30,45 @@ function HomeScreen({ navigation }) {
   const [errorEmail, setErrorEmail] = useState('');
   const [errorPassword, setErrorPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+
+   const [user, setUser] = useState();
+  // const {user, setUser} = useContext(AuthContext);
+  // console.log(user);
+
+  // useEffect(() => {
+
+  //     if(user){
+  //       const {uid, displayName, photoURL} = user;
+
+  //       if(!displayName || !photoURL)
+  //         // throw new Error("O usuário não tem displayName ou photoURL!");
+  //         alert("O usuário não tem displayName ou photoURL!");
+
+  //       setUser({
+  //         id: uid,
+  //         avatar: photoURL,
+  //         name: displayName,
+  //       });
+  //     }
+
+  // }, []);
+
+  // Registrar o observador para monitorar o estado de autenticação
+  // const auth = getAuth();
+  // const unsubscribe = onAuthStateChanged(auth, handleAuthStateChanged);
+
+  // Função de retorno de chamada que é executada sempre que o estado de autenticação é alterado
+  // const handleAuthStateChanged = (user) => {
+  //   if (user) {
+  //     // O usuário está autenticado
+  //     console.log("Usuário autenticado:", user);
+  //     // Faça o que for necessário com o usuário autenticado
+  //   } else {
+  //     // O usuário está desconectado
+  //     console.log("Usuário desconectado");
+  //     // Faça o que for necessário quando o usuário estiver desconectado
+  //   }
+  // };
 
   function logar() {
     // Aqui você pode implementar a lógica para cadastrar o usuário
@@ -42,8 +86,12 @@ function HomeScreen({ navigation }) {
       .then((userCredential) => {
         // login bem sucedido
         const user = userCredential.user;
-        alert("Usuário logado: "+ user.email);
-        navigation.navigate('Lista');
+        // alert("Usuário logado: "+ user.email);
+        // navigation.navigate('Inicial');
+        navigation.navigate('Inicial',
+            {
+              name: email
+            });
       })
       .catch((error) => {
         // erro ao fazer login
@@ -76,25 +124,45 @@ function HomeScreen({ navigation }) {
   const handleForgotPassword = () => {
     // Lógica para lidar com o esquecimento da senha
     console.log('Esqueceu a senha?');
+    alert("Em desenvolvimento!");
   };
 
   const handleGoogleSignIn = async () => {
-    try {
-      await GoogleSignin.hasPlayServices();
-      const userInfo = await GoogleSignin.signIn();
-      console.log('Usuário logado com sucesso:', userInfo);
-      // Lógica para lidar com o login com o Google
-    } catch (error) {
-      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        console.log('Login com o Google cancelado');
-      } else if (error.code === statusCodes.IN_PROGRESS) {
-        console.log('Login com o Google em andamento');
-      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        console.log('Serviços do Google Play indisponíveis ou desatualizados');
-      } else {
-        console.log('Erro ao fazer login com o Google:', error.message);
-      }
-    }
+    const auth = getAuth();
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+    .then((result) => {
+      // Login com o Google bem sucedido
+      const user = result.user;
+      console.log("Usuário logado com o Google:", user.displayName);
+
+      const {uid, displayName, photoURL} = user;
+
+      if(!displayName || !photoURL)
+        // throw new Error("O usuário não tem displayName ou photoURL!");
+        Alert("O usuário não tem displayName ou photoURL!");
+
+      // setUser({
+      //   id: uid,
+      //   avatar: photoURL,
+      //   name: displayName,
+      // });
+
+      // alert("Usuário logado: "+ user.displayName);
+      // navigation.navigate('Inicial');
+
+      navigation.navigate('Inicial',
+            {
+              id: uid,
+              avatar: photoURL,
+              name: displayName
+            });
+      // Faça o que for necessário com o usuário logado
+    })
+    .catch((error) => {
+      // Ocorreu um erro ao fazer login com o Google
+      console.log("Erro ao fazer login com o Google:", error);
+    });
   };
 
   return (
@@ -146,8 +214,8 @@ function HomeScreen({ navigation }) {
         autoCapitalize="none"
         rightIcon={
           <Icon
-            name={showPassword ? 'eye-off' : 'eye'}
-            type="feather"
+            name={showPassword ? 'eye-slash' : 'eye'}
+            type="font-awesome"
             onPress={toggleShowPassword}
           />
         }

@@ -76,5 +76,5 @@ web-build/
 dist/
 
 # @end expo-cli
-
+service/firebase.js
 backend/autentica.js
