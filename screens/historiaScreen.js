@@ -5,16 +5,23 @@ import { Link, animateScroll as scroll } from "react-scroll";*/
 import { Button, Avatar, Input, Overlay } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-function UnidadesScreen({ route, navigation }) {
+function HistoriaScreen({ route, navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Unidades de Saúde</Text>
+      <Text style={styles.title}>História das Vacinas</Text>
       <Image
         style={styles.avatar}
-        source={{uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3ZZ7KTb_bocTUTck4oAIUghCvFNhLBiLd9A&usqp=CAU'}}
+        source={{uri: 'https://s2.glbimg.com/3Q5hkztBR6St-JFN52_1Q-DkGvs=/e.glbimg.com/og/ed/f/original/2021/05/13/qqed_82_historia_da_vacina_site_capa.jpg'}}
       />
- 
+      <Text style={styles.title2}>Introdução</Text>
+      <Text style={{ color: 'white', textAlign: 'center', }}>
+      {`Era uma vez uma doença antiga chamada varíola, que assolou a humanidade por séculos, causando mortes e deixando marcas físicas e sociais. As pessoas lutavam para encontrar maneiras de controlar essa doença mortal e melhorar suas condições de vida.
+
+      Em um lugar distante, na China, no século X, os médicos já praticavam uma forma de prevenção contra a varíola, usando pó das feridas dos doentes e soprando-o nas narinas das pessoas em busca de proteção. Os turcos também faziam algo parecido, usando veneno de varíola humana para imunizar. No entanto, esses métodos eram arriscados e não tinham o apoio da sociedade.
+
+      Em meio ao medo da doença, surgiu um herói improvável chamado Edward Jenner. Ele observou que pessoas que ordenhavam vacas não pegavam varíola humana, mas uma doença semelhante chamada vacínia. Inspirado por essa descoberta, Jenner criou a primeira vacina antivariólica usando a vacínia das vacas.`}
+  </Text>
   <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('Inicial')}>
           <Text style={styles.buttonText} > VOLTAR </Text>
         </TouchableOpacity>
@@ -99,4 +106,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UnidadesScreen;
+export default HistoriaScreen;

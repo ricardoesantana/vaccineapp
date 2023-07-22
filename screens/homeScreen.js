@@ -71,6 +71,7 @@ function HomeScreen({ navigation }) {
   // };
 
   function logar() {
+
     // Aqui você pode implementar a lógica para cadastrar o usuário
     // console.log(`Email: ${email}, Senha: ${password}`);
     if(email !== '' && password !== '' && email !== null && password !== null){
@@ -127,6 +128,7 @@ function HomeScreen({ navigation }) {
     alert("Em desenvolvimento!");
   };
 
+  
   const handleGoogleSignIn = async () => {
     const auth = getAuth();
     const provider = new GoogleAuthProvider();

@@ -39,6 +39,8 @@ function HistVacScreen({ route, navigation }) {
 
     </View>
   );
+
+  
 }
 
 const styles = StyleSheet.create({
