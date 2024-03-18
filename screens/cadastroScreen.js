@@ -85,11 +85,12 @@ function CadastroScreen({ navigation }) {
   }
 
   return (
-    <View style={[styles2.container, {
-      flexDirection: "column"
-    }]}>
-      <View style={{ flex: 1 }} >
-        <Header
+    // <View style={[styles2.container, {
+    //   flexDirection: "column"
+    // }]}>
+    //   <View style={{ flex: 1 }} >
+    <View style={styles2.container}>
+        <Header style={styles2.header}
           leftComponent={<Button
             icon={
               <Icon
@@ -110,9 +111,9 @@ function CadastroScreen({ navigation }) {
           centerContainerStyle={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
           containerStyle={{ backgroundColor: '#497e99' }}
         />
-      </View>
+      {/* </View> */}
       {/* <View style={styles2.container}> */}
-      <View style={{ flex: 2 }} >
+      {/* <View style={{ flex: 2 }} > */}
         {/* <TextInput
         style={styles2.input}
         placeholder="Nome"
@@ -165,7 +166,7 @@ function CadastroScreen({ navigation }) {
         <TouchableOpacity style={styles2.button} onPress={cadastrar}>
           <Text style={styles2.buttonText}>Salvar</Text>
         </TouchableOpacity>
-      </View>
+      {/* </View> */}
     </View>
   );
 }
@@ -173,7 +174,7 @@ function CadastroScreen({ navigation }) {
 const styles2 = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'center',
     backgroundColor: '#497e99',
     paddingTop: 0
@@ -208,6 +209,9 @@ const styles2 = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+  header: {
+    alignItems: 'flex-start',
+  }
 });
 
 export default CadastroScreen;
