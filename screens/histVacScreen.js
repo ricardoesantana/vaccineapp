@@ -39,6 +39,11 @@ function HistVacScreen({ route, navigation }) {
 
     </View>
   );
+<<<<<<< HEAD
+=======
+
+  
+>>>>>>> ea3d31a2b5120b357f81e4dc40ff4137400051f0
 }
 
 const styles = StyleSheet.create({

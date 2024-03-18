@@ -85,12 +85,20 @@ function CadastroScreen({ navigation }) {
   }
 
   return (
+<<<<<<< HEAD
     // <View style={[styles2.container, {
     //   flexDirection: "column"
     // }]}>
     //   <View style={{ flex: 1 }} >
     <View style={styles2.container}>
         <Header style={styles2.header}
+=======
+    <View style={[styles2.container, {
+      flexDirection: "column"
+    }]}>
+      <View style={{ flex: 1 }} >
+        <Header
+>>>>>>> ea3d31a2b5120b357f81e4dc40ff4137400051f0
           leftComponent={<Button
             icon={
               <Icon
@@ -111,9 +119,15 @@ function CadastroScreen({ navigation }) {
           centerContainerStyle={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
           containerStyle={{ backgroundColor: '#497e99' }}
         />
+<<<<<<< HEAD
       {/* </View> */}
       {/* <View style={styles2.container}> */}
       {/* <View style={{ flex: 2 }} > */}
+=======
+      </View>
+      {/* <View style={styles2.container}> */}
+      <View style={{ flex: 2 }} >
+>>>>>>> ea3d31a2b5120b357f81e4dc40ff4137400051f0
         {/* <TextInput
         style={styles2.input}
         placeholder="Nome"
@@ -166,7 +180,11 @@ function CadastroScreen({ navigation }) {
         <TouchableOpacity style={styles2.button} onPress={cadastrar}>
           <Text style={styles2.buttonText}>Salvar</Text>
         </TouchableOpacity>
+<<<<<<< HEAD
       {/* </View> */}
+=======
+      </View>
+>>>>>>> ea3d31a2b5120b357f81e4dc40ff4137400051f0
     </View>
   );
 }
@@ -174,7 +192,11 @@ function CadastroScreen({ navigation }) {
 const styles2 = StyleSheet.create({
   container: {
     flex: 1,
+<<<<<<< HEAD
     alignItems: 'flex-start',
+=======
+    alignItems: 'center',
+>>>>>>> ea3d31a2b5120b357f81e4dc40ff4137400051f0
     justifyContent: 'center',
     backgroundColor: '#497e99',
     paddingTop: 0
@@ -209,9 +231,12 @@ const styles2 = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+<<<<<<< HEAD
   header: {
     alignItems: 'flex-start',
   }
+=======
+>>>>>>> ea3d31a2b5120b357f81e4dc40ff4137400051f0
 });
 
 export default CadastroScreen;

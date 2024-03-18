@@ -9,7 +9,13 @@ import CadastroContatoScreen from './screens/cadastroContatoScreen';
 import AlterarContatoScreen from './screens/alterarContatoScreen';
 import InicialScreen from './screens/inicialScreen';
 import HistVacScreen from './screens/histVacScreen';
+<<<<<<< HEAD
 import UnidadesScreen from './screens/unidadesScreen';
+=======
+import HistoriaScreen from './screens/historiaScreen';
+import UnidadesScreen from './screens/unidadesScreen';
+import QuizScreen from './screens/quizScreen';
+>>>>>>> ea3d31a2b5120b357f81e4dc40ff4137400051f0
 // import AuthContextProvider from './contexts/AuthContext';
 
 const Stack = createNativeStackNavigator();
@@ -26,8 +32,15 @@ function App() {
         <Stack.Screen name="Contato" component={CadastroContatoScreen} options={{headerShown:false, title: 'Cadastro de Contatos'}} />
         <Stack.Screen name="AlterarContato" component={AlterarContatoScreen} options={{headerShown:false, title: 'Alteração de Contatos'}} />
         <Stack.Screen name="Inicial" component={InicialScreen} options={{headerShown:false, title: 'Tela Inicial'}} />
+<<<<<<< HEAD
         <Stack.Screen name="HistVac" component={HistVacScreen} options={{headerShown:false, title: 'Tela Inicial'}} />
         <Stack.Screen name="Unidades" component={UnidadesScreen} options={{headerShown:false, title: 'Tela Inicial'}} />
+=======
+        <Stack.Screen name="HistVac" component={HistVacScreen} options={{headerShown:false, title: 'Histórico de Vacinas'}} />
+        <Stack.Screen name="Historia" component={HistoriaScreen} options={{headerShown:false, title: 'História das Vacinas'}} />
+        <Stack.Screen name="Unidades" component={UnidadesScreen} options={{headerShown:false, title: 'Tela Inicial'}} />
+        <Stack.Screen name="Quiz" component={QuizScreen} options={{headerShown:false, title: 'Quiz Vacinas'}} />
+>>>>>>> ea3d31a2b5120b357f81e4dc40ff4137400051f0
       </Stack.Navigator>
     </NavigationContainer>
     // </AuthContextProvider>
